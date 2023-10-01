@@ -7,15 +7,19 @@ const TODOS_KEY = "toDos";
 let toDos = [];
 
 function saveToDos() {
+  // 배열상태인(localStorage는 배열 상태를 받을 수 없음) toDos를
+  // String으로 바꾸고 그 값을 toDos라는 이름의 key에 넣어준다.
   localStorage.setItem(TODOS_KEY, JSON.stringify(toDos));
 }
 
 function deleteToDo(event) {
   const li = event.target.parentElement;
   li.remove();
-  // localStorage.removeItem("todos", JSON.stringify(toDos));
+  toDos = toDos.filter((toDo) => toDo.id !== parseInt(li.id));
+  saveToDos();
 }
 
+// 브라우저 화면에 ToDo list 그리기
 function paintToDo(newTodo) {
   const li = document.createElement("li");
   li.id = newTodo.id;
